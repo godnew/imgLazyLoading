@@ -58,6 +58,6 @@
     }
 ```
 
-具体代码在github上了，地址是：https://github.com/godnew/imgLazyLoading，欢迎star。
+具体代码在github上了，地址是：[https://github.com/godnew/imgLazyLoading](https://github.com/godnew/imgLazyLoading)，欢迎star。
 
 使用方法：src不设设置loading的图片，具体图片（宽高已设好）地址写在lazy属性里。在外部调用  lazyLoad.init();
