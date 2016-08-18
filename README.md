@@ -17,7 +17,7 @@
 
 实现：
 
-1. 将页面中需要懒加载的图片保存起来
+1.将页面中需要懒加载的图片保存起来
 ```javascript
     function getImages() {
           var ele = document.getElementsByTagName('img');
@@ -31,7 +31,8 @@
           }
      }
 ```
-2. 遍历数组对满足要求的img设置其src
+
+2.遍历数组对满足要求的img设置其src
 ```javascript
     function lazy() {
     //图片数量数量为0时则退出
@@ -51,7 +52,8 @@
         }
     }
 ```
-3. 页面滚动时判断图片是否进入了可视区域
+
+3.页面滚动时判断图片是否进入了可视区域
 ```javascript
     window.onscroll = window.onload = function () {
       lazy();//此处可设节流，滚动一下触发了n次   消耗太大。。。
