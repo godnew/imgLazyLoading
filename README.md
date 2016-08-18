@@ -14,3 +14,50 @@
 次，等到页面滚动到一定区，用实际存放img地址的laze-load属性的值去替换src属性，这就可实现根据滚动的图片懒加载。**这里提醒大家一点，也
 算是一个知识点（雅虎军规中的一条），不要设置空src，就算是src为空，浏览器也会对服务器发送请求。所以平时项目中，尽量不要设置空script
 和img的src。**
+
+实现：
+
+1. 将页面中需要懒加载的图片保存起来
+```javascript
+    function getImages() {
+          var ele = document.getElementsByTagName('img');
+          for (var j = 0, len2 = ele.length; j < len2; j++) {
+      //判断当前图片是否要懒加载
+              if (typeof (ele[j].getAttribute("lazy_src"))) {
+      //保存进数组
+                  imgs.push(ele[j]);
+                  count++;
+              }
+          }
+     }
+```
+2. 遍历数组对满足要求的img设置其src
+```javascript
+    function lazy() {
+    //图片数量数量为0时则退出
+        if (!count) return;
+    //获取当前可视区域的高
+        var innerHeight = getViewport();
+        for (var i = 0, len = imgs.length; i < len; i++) {
+    //获取图片距最顶部的距离（document的最顶部）
+            var imgTop = getElementViewTop(imgs[i]);   
+    //判断图片是否进入了可视区域
+            if (imgTop - getScrollTop() < innerHeight) {
+                imgs[i].src = imgs[i].getAttribute("lazy");
+    //已加载的图片从数组中删除，数量减一
+                delete imgs[i];
+                count--;
+            }
+        }
+    }
+```
+3. 页面滚动时判断图片是否进入了可视区域
+```javascript
+    window.onscroll = window.onload = function () {
+      lazy();//此处可设节流，滚动一下触发了n次   消耗太大。。。
+    }
+```
+
+具体代码在github上了，地址是：https://github.com/godnew/imgLazyLoading，欢迎star。
+
+使用方法：src不设设置loading的图片，具体图片（宽高已设好）地址写在lazy属性里。在外部调用  lazyLoad.init();
