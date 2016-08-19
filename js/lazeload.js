@@ -68,6 +68,18 @@
                     count++;
                 }
             }
-        }
+        },
+        lazy: function () {
+            if (!count) return;//没图片了就不往下执行了
+            var innerHeight = this.getPosition.Viewport();//屏幕高
+            for (var i = 0, len = imgs.length; i < len; i++) {
+                var t_index = this.getPosition.ElementViewTop(imgs[i]); //得到图片相对窗口的顶部距离
+                if (t_index  < innerHeight) {//判断图片是否出现在屏幕中
+                    imgs[i].src = imgs[i].getAttribute("lazy");//加载图片
+                    delete imgs[i];//从保存的数组中删除已加载的图片
+                    count--;//数量减一
+                }
+            }
+        },
     };
 })();
