@@ -42,7 +42,7 @@
         },
         loading: function () {
             //当滚动时则判断图片是否要加载
-            window.onscroll = window.onload = function () {
+            window.onscroll = window.onload = window.onload = function () {
                 setTimeout(function () {
                     LazyLoad.prototype.lazy();
                 }, 1000)
