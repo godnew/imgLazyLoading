@@ -56,7 +56,7 @@
 3.页面滚动时判断图片是否进入了可视区域
 ```javascript
     window.onscroll = window.onload = function () {
-      lazy();//此处可设节流，滚动一下触发了n次   消耗太大。。。
+      lazy();//此处应设节流，滚动一下触发了n次   消耗太大。。。
     }
 ```
 
