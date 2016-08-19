@@ -17,6 +17,37 @@
             this.lazy();//执行一次懒加载检测
             this.loading();//当事件触发时执行懒加载检测
         },
+        //储存懒加载图片
+        getImages:function(){
+            var ele = document.getElementsByTagName('img');
+            for (var i = 0, len = ele.length; i < len; i++) {
+                //判断img是否有lazy标志
+                if (typeof (ele[i].getAttribute("lazy"))) {
+                    imgs.push(ele[i]);
+                    count++;
+                }
+            }
+        },
+        lazy: function () {
+            if (!count) return;//没图片了就不往下执行了
+            var innerHeight = this.getPosition.Viewport();//屏幕高
+            for (var i = 0, len = imgs.length; i < len; i++) {
+                var t_index = this.getPosition.ElementViewTop(imgs[i]); //得到图片相对窗口的顶部距离
+                if (t_index  < innerHeight) {//判断图片是否出现在屏幕中
+                    imgs[i].src = imgs[i].getAttribute("lazy");//加载图片
+                    delete imgs[i];//从保存的数组中删除已加载的图片
+                    count--;//数量减一
+                }
+            }
+        },
+        loading: function () {
+            //当滚动时则判断图片是否要加载
+            window.onscroll = window.onload = function () {
+                setTimeout(function () {
+                    LazyLoad.prototype.lazy();
+                }, 1000)
+            }
+        },
         getPosition:{
             /*该方法可获取3个高度*/
             /*
@@ -57,29 +88,7 @@
                 }
                 return elementScrollTop;
             }
-        },
-        //储存懒加载图片
-        getImages:function(){
-            var ele = document.getElementsByTagName('img');
-            for (var i = 0, len = ele.length; i < len; i++) {
-                //判断img是否有lazy标志
-                if (typeof (ele[j].getAttribute("lazy"))) {
-                    imgs.push(el[j]);
-                    count++;
-                }
-            }
-        },
-        lazy: function () {
-            if (!count) return;//没图片了就不往下执行了
-            var innerHeight = this.getPosition.Viewport();//屏幕高
-            for (var i = 0, len = imgs.length; i < len; i++) {
-                var t_index = this.getPosition.ElementViewTop(imgs[i]); //得到图片相对窗口的顶部距离
-                if (t_index  < innerHeight) {//判断图片是否出现在屏幕中
-                    imgs[i].src = imgs[i].getAttribute("lazy");//加载图片
-                    delete imgs[i];//从保存的数组中删除已加载的图片
-                    count--;//数量减一
-                }
-            }
-        },
+        }
     };
+    window.LazyLoad=LazyLoad;//将lazyload暴露给window
 })();
