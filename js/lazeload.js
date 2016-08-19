@@ -57,6 +57,17 @@
                 }
                 return elementScrollTop;
             }
+        },
+        //储存懒加载图片
+        getImages:function(){
+            var ele = document.getElementsByTagName('img');
+            for (var i = 0, len = ele.length; i < len; i++) {
+                //判断img是否有lazy标志
+                if (typeof (ele[j].getAttribute("lazy"))) {
+                    imgs.push(el[j]);
+                    count++;
+                }
+            }
         }
     };
 })();
