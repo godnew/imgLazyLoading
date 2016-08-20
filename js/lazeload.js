@@ -81,10 +81,8 @@
                 //获取卷去的高度
                 if (document.compatMode == "BackCompat") {
                     var elementScrollTop = document.body.scrollTop;
-
                 } else {
                     var elementScrollTop = document.documentElement.scrollTop == 0 ? document.body.scrollTop:document.documentElement.scrollTop;
-
                 }
                 return elementScrollTop;
             }
