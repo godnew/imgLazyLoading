@@ -60,8 +60,6 @@
     }
 ```
 
-具体代码在github上了，地址是：[https://github.com/godnew/imgLazyLoading](https://github.com/godnew/imgLazyLoading)，欢迎star。
-
 使用方法：src设置loading的图片地址，具体图片（宽高已设好）地址写在lazy属性里。在外部调用  lazyLoad.init();
 ##图片预加载
 在Web开发中，图片预加载也经常用到，如果直接给某个img标签节点设置src属性，由于图片过大或者网络不佳，图片的位置往往有段时间会是一片空白。实现预载的方法有很多多，可以用CSS(background)、JS(Image)、HTML(<img/>)。这里就讲解最常用的做法，先用一张菊花图![](images/flower.jpg) 占位，然后用异步的方式加载图片，等图片加载好了再把它填充到img 节点里。
@@ -87,3 +85,5 @@ var MyImage = (function(){
     }
 })();
 ```
+
+具体代码在github上了，地址是：[https://github.com/godnew/imgLazyLoading](https://github.com/godnew/imgLazyLoading)，欢迎star。
