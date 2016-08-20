@@ -12,8 +12,8 @@
 
 首先，简单的讲一下其实现的过程：当访问网站的时候，先把页面的上所有的img元素或是背景图片路径替换成loading图片地址，这样就只需请求一
 次，等到页面滚动到一定区，用实际存放img地址的laze-load属性的值去替换src属性，这就可实现根据滚动的图片懒加载。**这里提醒大家一点，也
-算是一个知识点（雅虎军规中的一条），不要设置空src，就算是src为空，浏览器也会对服务器发送请求。所以平时项目中，尽量不要设置空script
-和img的src。**
+算是一个知识点（雅虎军规中的一条），不要设置空src，就算是src为空，浏览器也会对服务器发送请求。所以平时项目中，尽量不要有空src的script
+和img标签。**
 
 实现：
 
@@ -62,4 +62,28 @@
 
 具体代码在github上了，地址是：[https://github.com/godnew/imgLazyLoading](https://github.com/godnew/imgLazyLoading)，欢迎star。
 
-使用方法：src不设设置loading的图片，具体图片（宽高已设好）地址写在lazy属性里。在外部调用  lazyLoad.init();
+使用方法：src设置loading的图片地址，具体图片（宽高已设好）地址写在lazy属性里。在外部调用  lazyLoad.init();
+##图片预加载
+在Web开发中，图片预加载也经常用到，如果直接给某个img标签节点设置src属性，由于图片过大或者网络不佳，图片的位置往往有段时间会是一片空白。实现预载的方法有很多多，可以用CSS(background)、JS(Image)、HTML(<img/>)。这里就讲解最常用的做法，先用一张菊花图![](images/flower.jpg) 占位，然后用异步的方式加载图片，等图片加载好了再把它填充到img 节点里。
+
+实现：
+```javascript
+var MyImage = (function(){
+    var imgNode = document.createElement( 'img' );
+    var img = new Image;
+    var callback;//回调函数处理imgNode
+    img.onload = function(){
+    //图片加载完后设置imgNode的src
+        imgNode.src = img.src;
+    //回调函数处理该节点
+        callback.apply(imgNode,arguments);
+    };
+    return {
+        setSrc: function( loading,src ,fn){//菊花图地址   图片地址   回调函数
+            imgNode.src = loading;
+            img.src = src;
+            callback=fn;
+        }
+    }
+})();
+```
